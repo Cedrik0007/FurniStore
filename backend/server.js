@@ -16,21 +16,44 @@ connectDB();
 
 const app = express();
 
-// Middleware
+// Build allowed origins
 const allowedOrigins = [
-  "http://localhost:5173",
-  process.env.FRONTEND_URL,
-].filter(Boolean);
+  "http://localhost:5173", // Development
+  "http://localhost:3000", // Alternative dev
+  process.env.FRONTEND_URL, // Production Vercel URL
+].filter(Boolean); // Remove undefined values
 
-app.use(cors({
+console.log("✅ Allowed CORS origins:", allowedOrigins);
+
+// CORS middleware configuration
+const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, Render health checks)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    callback(new Error(`CORS blocked: ${origin}`));
+    // Allow requests with no origin (health checks, Render pings, mobile apps)
+    if (!origin) {
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // Log blocked origins for debugging
+    console.warn(`⚠️  CORS blocked request from: ${origin}`);
+    callback(new Error(`CORS not allowed from origin: ${origin}`));
   },
-  credentials: true,
-}));
+  credentials: false, // We use JWT in Authorization header, not cookies
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  maxAge: 3600, // Cache preflight for 1 hour
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Explicitly handle preflight OPTIONS requests for all routes
+app.options("*", cors(corsOptions));
+
+// Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
