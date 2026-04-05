@@ -1,0 +1,187 @@
+/* =====================================================
+   DASHBOARD CSS
+   ===================================================== */
+
+/* =====================
+   STATS GRID
+   ===================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-income {
+  background-color: var(--success-light);
+  border-color: #bbf7d0;
+}
+
+.stat-expense {
+  background-color: var(--danger-light);
+  border-color: #fecaca;
+}
+
+.stat-profit {
+  background-color: var(--primary-light);
+  border-color: #c7d2fe;
+}
+
+.stat-loss {
+  background-color: var(--danger-light);
+  border-color: #fecaca;
+}
+
+.stat-products {
+  background-color: var(--warning-light);
+  border-color: #fde68a;
+}
+
+.stat-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.stat-info {
+  min-width: 0;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.value-profit {
+  color: var(--income-color);
+}
+
+.value-loss {
+  color: var(--expense-color);
+}
+
+/* =====================
+   TRANSACTION LIST
+   ===================== */
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.transaction-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition);
+}
+
+.transaction-item:hover {
+  background-color: var(--surface-2);
+}
+
+.tx-indicator {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.tx-income {
+  background-color: var(--success-light);
+  color: var(--income-color);
+}
+
+.tx-expense {
+  background-color: var(--danger-light);
+  color: var(--expense-color);
+}
+
+.tx-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tx-desc {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.tx-amount {
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.amount-income {
+  color: var(--income-color);
+}
+
+.amount-expense {
+  color: var(--expense-color);
+}
+
+/* =====================
+   TABLET (768px+)
+   ===================== */
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .stat-card {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,172 @@
+/* =====================================================
+   TRANSACTIONS CSS — Income & Expense pages
+   ===================================================== */
+
+/* =====================
+   TOTAL BANNER
+   ===================== */
+.total-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+
+.income-banner {
+  background-color: var(--success-light);
+  border-color: #bbf7d0;
+}
+
+.expense-banner {
+  background-color: var(--danger-light);
+  border-color: #fecaca;
+}
+
+.total-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.total-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+/* =====================
+   TABLE
+   ===================== */
+.table-wrapper {
+  background-color: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px;
+}
+
+.data-table thead tr {
+  background-color: var(--surface-2);
+  border-bottom: 2px solid var(--border);
+}
+
+.data-table th {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--transition);
+}
+
+.data-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background-color: var(--surface-2);
+}
+
+.data-table td {
+  padding: 12px 14px;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+/* Footer row */
+.data-table tfoot tr {
+  background-color: var(--surface-2);
+  border-top: 2px solid var(--border);
+}
+
+.data-table tfoot td {
+  padding: 12px 14px;
+  font-weight: 700;
+}
+
+.table-total-label {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.table-total {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* Cell styles */
+.cell-main {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cell-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Amount colors */
+.amount-income {
+  color: var(--income-color);
+  font-weight: 700;
+}
+
+.amount-expense {
+  color: var(--expense-color);
+  font-weight: 700;
+}
+
+/* Expense type cell */
+.expense-type-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.expense-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* =====================
+   TABLET (768px+)
+   ===================== */
+@media (min-width: 768px) {
+  .total-value {
+    font-size: 1.5rem;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 14px 18px;
+  }
+
+  .data-table th {
+    font-size: 0.8rem;
+  }
+
+  .data-table td {
+    font-size: 0.9rem;
+  }
+}

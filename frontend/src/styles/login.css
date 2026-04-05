@@ -1,0 +1,102 @@
+/* =====================================================
+   LOGIN PAGE CSS
+   ===================================================== */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 40%, #1e1b4b 100%);
+}
+
+.login-card {
+  background-color: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: 36px 28px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-logo {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.login-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.login-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--danger-light);
+  border: 1px solid #fca5a5;
+  color: var(--danger-dark);
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-input {
+  font-size: 1rem;
+  padding: 13px 16px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  margin-top: 4px;
+  border-radius: var(--radius-md);
+}
+
+.login-hint {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.login-hint p {
+  margin-bottom: 6px;
+}
+
+.login-hint code {
+  display: block;
+  background-color: var(--surface-2);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-family: "Courier New", monospace;
+  border: 1px solid var(--border);
+}
