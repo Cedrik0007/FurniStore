@@ -6,7 +6,7 @@ const Product = require("../models/Product");
 // @access  Private
 const getIncomes = async (req, res) => {
   try {
-    const incomes = await Income.find({ isDeleted: false })
+    const incomes = await Income.find({ isDeleted: { $ne: true } })
       .populate("product", "name price category")
       .populate("createdBy", "name")
       .sort({ date: -1 });

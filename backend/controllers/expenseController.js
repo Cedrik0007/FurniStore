@@ -5,7 +5,7 @@ const Expense = require("../models/Expense");
 // @access  Private
 const getExpenses = async (req, res) => {
   try {
-    const expenses = await Expense.find({ isDeleted: false })
+    const expenses = await Expense.find({ isDeleted: { $ne: true } })
       .populate("createdBy", "name")
       .sort({ date: -1 });
 

@@ -7,11 +7,11 @@ const Product = require("../models/Product");
 // @access  Private
 const getDashboard = async (req, res) => {
   try {
-    // Fetch all income and expenses in parallel
+    // Fetch all income and expenses in parallel (excluding deleted records)
     const [incomes, expenses, products] = await Promise.all([
-      Income.find().populate("product", "name category").sort({ date: -1 }),
-      Expense.find().sort({ date: -1 }),
-      Product.find(),
+      Income.find({ isDeleted: { $ne: true } }).populate("product", "name category").sort({ date: -1 }),
+      Expense.find({ isDeleted: { $ne: true } }).sort({ date: -1 }),
+      Product.find({ isDeleted: { $ne: true } }),
     ]);
 
     // Calculate totals safely using reduce + parseFloat

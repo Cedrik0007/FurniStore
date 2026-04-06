@@ -6,7 +6,7 @@ const Product = require("../models/Product");
 const getProducts = async (req, res) => {
   try {
     const { category } = req.query;
-    const filter = category ? { category, isDeleted: false } : { isDeleted: false };
+    const filter = category ? { category, isDeleted: { $ne: true } } : { isDeleted: { $ne: true } };
     const products = await Product.find(filter)
       .populate("createdBy", "name")
       .sort({ createdAt: -1 });
@@ -25,7 +25,7 @@ const getProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
       .where("isDeleted")
-      .equals(false)
+      .ne(true)
       .populate("createdBy", "name");
 
     if (!product) {

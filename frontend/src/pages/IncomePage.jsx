@@ -73,7 +73,9 @@ const IncomePage = () => {
 
   const handleDeleteIncome = async (deleteReason) => {
     try {
-      await api.delete(`/income/${deleteDialog.id}`, {
+      await api.request({
+        method: 'delete',
+        url: `/income/${deleteDialog.id}`,
         data: { deleteReason },
       });
       setAlert({ type: "success", message: "Income record deleted." });

@@ -75,7 +75,9 @@ const ExpensePage = () => {
 
   const handleDeleteExpense = async (deleteReason) => {
     try {
-      await api.delete(`/expenses/${deleteDialog.id}`, {
+      await api.request({
+        method: 'delete',
+        url: `/expenses/${deleteDialog.id}`,
         data: { deleteReason },
       });
       setAlert({ type: "success", message: "Expense record deleted." });

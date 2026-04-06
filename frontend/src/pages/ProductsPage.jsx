@@ -79,7 +79,9 @@ const ProductsPage = () => {
 
   const handleDeleteProduct = async (deleteReason) => {
     try {
-      await api.delete(`/products/${deleteDialog.product._id}`, {
+      await api.request({
+        method: 'delete',
+        url: `/products/${deleteDialog.product._id}`,
         data: { deleteReason },
       });
       setAlert({ type: "success", message: "Product deleted successfully!" });
