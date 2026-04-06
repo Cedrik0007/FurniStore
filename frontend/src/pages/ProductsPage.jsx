@@ -4,7 +4,7 @@ import api from "../services/api";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Alert from "../components/Alert";
 import ProductForm from "../components/ProductForm";
-import ConfirmDialog from "../components/ConfirmDialog";
+import DeleteReasonDialog from "../components/DeleteReasonDialog";
 import { getImageUrl } from "../utils/imageUrl";
 import { Package, Trash2, Edit } from "lucide-react";
 import "../styles/products.css";
@@ -77,9 +77,11 @@ const ProductsPage = () => {
     }
   };
 
-  const handleDeleteProduct = async () => {
+  const handleDeleteProduct = async (deleteReason) => {
     try {
-      await api.delete(`/products/${deleteDialog.product._id}`);
+      await api.delete(`/products/${deleteDialog.product._id}`, {
+        data: { deleteReason },
+      });
       setAlert({ type: "success", message: "Product deleted successfully!" });
       setDeleteDialog({ open: false, product: null });
       fetchProducts();
@@ -200,14 +202,13 @@ const ProductsPage = () => {
         loading={formLoading}
       />
 
-      <ConfirmDialog
+      <DeleteReasonDialog
         isOpen={deleteDialog.open}
         title="Delete Product"
         message={`Are you sure you want to delete "${deleteDialog.product?.name}"? This action cannot be undone.`}
+        itemName={deleteDialog.product?.name}
         onConfirm={handleDeleteProduct}
         onCancel={() => setDeleteDialog({ open: false, product: null })}
-        confirmText="Delete"
-        confirmClass="btn-danger"
       />
     </div>
   );

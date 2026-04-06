@@ -6,7 +6,7 @@ const Product = require("../models/Product");
 const getProducts = async (req, res) => {
   try {
     const { category } = req.query;
-    const filter = category ? { category } : {};
+    const filter = category ? { category, isDeleted: false } : { isDeleted: false };
     const products = await Product.find(filter)
       .populate("createdBy", "name")
       .sort({ createdAt: -1 });
@@ -23,7 +23,10 @@ const getProducts = async (req, res) => {
 // @access  Private
 const getProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate("createdBy", "name");
+    const product = await Product.findById(req.params.id)
+      .where("isDeleted")
+      .equals(false)
+      .populate("createdBy", "name");
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
@@ -128,8 +131,14 @@ const deleteProduct = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    await Product.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Product deleted successfully" });
+    const { deleteReason } = req.body;
+
+    product.isDeleted = true;
+    product.deletedAt = new Date();
+    product.deleteReason = deleteReason || null;
+
+    const updatedProduct = await product.save();
+    res.status(200).json({ message: "Product deleted successfully", product: updatedProduct });
   } catch (error) {
     res.status(500).json({ message: "Server error deleting product" });
   }

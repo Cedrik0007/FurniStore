@@ -5,7 +5,7 @@ const Expense = require("../models/Expense");
 // @access  Private
 const getExpenses = async (req, res) => {
   try {
-    const expenses = await Expense.find()
+    const expenses = await Expense.find({ isDeleted: false })
       .populate("createdBy", "name")
       .sort({ date: -1 });
 
@@ -74,8 +74,14 @@ const deleteExpense = async (req, res) => {
       return res.status(404).json({ message: "Expense record not found" });
     }
 
-    await Expense.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Expense deleted successfully" });
+    const { deleteReason } = req.body;
+
+    expense.isDeleted = true;
+    expense.deletedAt = new Date();
+    expense.deleteReason = deleteReason || null;
+
+    const updatedExpense = await expense.save();
+    res.status(200).json({ message: "Expense deleted successfully", expense: updatedExpense });
   } catch (error) {
     res.status(500).json({ message: "Server error deleting expense" });
   }

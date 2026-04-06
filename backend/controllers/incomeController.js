@@ -6,7 +6,7 @@ const Product = require("../models/Product");
 // @access  Private
 const getIncomes = async (req, res) => {
   try {
-    const incomes = await Income.find()
+    const incomes = await Income.find({ isDeleted: false })
       .populate("product", "name price category")
       .populate("createdBy", "name")
       .sort({ date: -1 });
@@ -80,8 +80,14 @@ const deleteIncome = async (req, res) => {
       return res.status(404).json({ message: "Income record not found" });
     }
 
-    await Income.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Income deleted successfully" });
+    const { deleteReason } = req.body;
+
+    income.isDeleted = true;
+    income.deletedAt = new Date();
+    income.deleteReason = deleteReason || null;
+
+    const updatedIncome = await income.save();
+    res.status(200).json({ message: "Income deleted successfully", income: updatedIncome });
   } catch (error) {
     res.status(500).json({ message: "Server error deleting income" });
   }

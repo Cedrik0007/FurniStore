@@ -4,7 +4,7 @@ import api from "../services/api";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Alert from "../components/Alert";
 import IncomeForm from "../components/IncomeForm";
-import ConfirmDialog from "../components/ConfirmDialog";
+import DeleteReasonDialog from "../components/DeleteReasonDialog";
 import { DollarSign, Trash2 } from "lucide-react";
 import "../styles/transactions.css";
 
@@ -71,9 +71,11 @@ const IncomePage = () => {
     }
   };
 
-  const handleDeleteIncome = async () => {
+  const handleDeleteIncome = async (deleteReason) => {
     try {
-      await api.delete(`/income/${deleteDialog.id}`);
+      await api.delete(`/income/${deleteDialog.id}`, {
+        data: { deleteReason },
+      });
       setAlert({ type: "success", message: "Income record deleted." });
       setDeleteDialog({ open: false, id: null });
       fetchData();
@@ -173,14 +175,12 @@ const IncomePage = () => {
         loading={formLoading}
       />
 
-      <ConfirmDialog
+      <DeleteReasonDialog
         isOpen={deleteDialog.open}
         title="Delete Income Record"
         message="Are you sure you want to delete this income record?"
         onConfirm={handleDeleteIncome}
         onCancel={() => setDeleteDialog({ open: false, id: null })}
-        confirmText="Delete"
-        confirmClass="btn-danger"
       />
     </div>
   );

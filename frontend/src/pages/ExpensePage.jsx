@@ -4,7 +4,7 @@ import api from "../services/api";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Alert from "../components/Alert";
 import ExpenseForm from "../components/ExpenseForm";
-import ConfirmDialog from "../components/ConfirmDialog";
+import DeleteReasonDialog from "../components/DeleteReasonDialog";
 import { Home, User, Truck, Package, CreditCard, Trash2 } from "lucide-react";
 import "../styles/transactions.css";
 
@@ -73,9 +73,11 @@ const ExpensePage = () => {
     }
   };
 
-  const handleDeleteExpense = async () => {
+  const handleDeleteExpense = async (deleteReason) => {
     try {
-      await api.delete(`/expenses/${deleteDialog.id}`);
+      await api.delete(`/expenses/${deleteDialog.id}`, {
+        data: { deleteReason },
+      });
       setAlert({ type: "success", message: "Expense record deleted." });
       setDeleteDialog({ open: false, id: null });
       fetchExpenses();
@@ -178,14 +180,12 @@ const ExpensePage = () => {
         loading={formLoading}
       />
 
-      <ConfirmDialog
+      <DeleteReasonDialog
         isOpen={deleteDialog.open}
         title="Delete Expense Record"
         message="Are you sure you want to delete this expense record?"
         onConfirm={handleDeleteExpense}
         onCancel={() => setDeleteDialog({ open: false, id: null })}
-        confirmText="Delete"
-        confirmClass="btn-danger"
       />
     </div>
   );

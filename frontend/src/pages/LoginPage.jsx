@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/login.css";
-import { DollarSign, CreditCard, TrendingUp, TrendingDown, Package, FileText ,Sofa } from "lucide-react";
+import { DollarSign, CreditCard, TrendingUp, TrendingDown, Package, FileText ,Sofa ,AlertCircle } from "lucide-react";
 // import { useState } from "react";
 
 const LoginPage = () => {
