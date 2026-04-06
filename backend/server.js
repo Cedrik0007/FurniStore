@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const fs = require("fs");
 const connectDB = require("./config/db");
 
 // Route imports
@@ -16,9 +17,17 @@ connectDB();
 
 const app = express();
 
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log("✅ Created uploads directory:", uploadsDir);
+}
+
 // Build allowed origins
 const allowedOrigins = [
   "http://localhost:5173", // Development
+  "http://localhost:5174", // Development (alternative port)
   "http://localhost:3000", // Alternative dev
   process.env.FRONTEND_URL, // Production Vercel URL
 ].filter(Boolean); // Remove undefined values
@@ -57,8 +66,28 @@ app.options("*", cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Static uploads folder
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Static uploads folder with CORS and caching headers
+app.use(
+  "/uploads",
+  cors(), // Allow image requests from any origin
+  express.static(uploadsDir, {
+    // Cache images for 7 days in browser
+    maxAge: "7d",
+    // Add cache control headers
+    setHeaders: (res, path) => {
+      res.setHeader("Cache-Control", "public, max-age=604800"); // 7 days
+      res.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins for images
+    },
+  })
+);
+
+// Log image requests in development
+if (process.env.NODE_ENV !== "production") {
+  app.use("/uploads", (req, res, next) => {
+    console.log(`📸 Image request: ${req.path}`);
+    next();
+  });
+}
 
 // API Routes
 app.use("/api/auth", authRoutes);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Upload, X } from "lucide-react";
+import { getImageUrl } from "../utils/imageUrl";
 import "../styles/components.css";
 
 const CATEGORIES = ["Chair", "Bed", "Cupboard"];
@@ -174,7 +175,11 @@ const ProductForm = ({ isOpen, onClose, onSubmit, editProduct, loading }) => {
             <div className={`image-upload-container ${errors.image ? "input-error" : ""}`}>
               {imagePreview ? (
                 <div className="image-preview-wrapper">
-                  <img src={imagePreview} alt="Preview" className="image-preview" />
+                  <img 
+                    src={imagePreview.startsWith("data:") ? imagePreview : getImageUrl(imagePreview)} 
+                    alt="Preview" 
+                    className="image-preview" 
+                  />
                   <button
                     type="button"
                     className="image-clear-btn"

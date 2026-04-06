@@ -5,6 +5,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Alert from "../components/Alert";
 import ProductForm from "../components/ProductForm";
 import ConfirmDialog from "../components/ConfirmDialog";
+import { getImageUrl } from "../utils/imageUrl";
 import { Package, Trash2, Edit } from "lucide-react";
 import "../styles/products.css";
 
@@ -148,7 +149,7 @@ const ProductsPage = () => {
               <div className="product-image-wrapper">
                 {product.image ? (
                   <img
-                    src={product.image}
+                    src={getImageUrl(product.image)}
                     alt={product.name}
                     className="product-image"
                     onError={(e) => {

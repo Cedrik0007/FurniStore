@@ -7,5 +7,4 @@ build/
 *.log
 backend/uploads/*
 !backend/uploads/.gitkeep
-
 Mdfiles
