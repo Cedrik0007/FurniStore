@@ -80,6 +80,23 @@ app.use((req, res) => {
 // Global error handler
 app.use((err, req, res, next) => {
   console.error("Global error:", err.stack);
+  
+  // Handle multer errors
+  if (err.name === "MulterError") {
+    if (err.code === "FILE_TOO_LARGE") {
+      return res.status(400).json({ message: "File size must be less than 5MB" });
+    }
+    if (err.code === "LIMIT_FILE_COUNT") {
+      return res.status(400).json({ message: "Only one file is allowed per upload" });
+    }
+    return res.status(400).json({ message: "File upload error: " + err.message });
+  }
+  
+  // Handle file filter errors
+  if (err.message && err.message.includes("Only image files are allowed")) {
+    return res.status(400).json({ message: err.message });
+  }
+  
   res.status(err.status || 500).json({
     message: err.message || "Internal Server Error",
   });

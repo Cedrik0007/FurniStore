@@ -5,6 +5,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Alert from "../components/Alert";
 import ExpenseForm from "../components/ExpenseForm";
 import ConfirmDialog from "../components/ConfirmDialog";
+import { Home, User, Truck, Package, CreditCard, Trash2 } from "lucide-react";
 import "../styles/transactions.css";
 
 const formatCurrency = (value) => {
@@ -25,10 +26,10 @@ const formatDate = (dateStr) => {
 };
 
 const EXPENSE_ICONS = {
-  rent: "🏠",
-  salary: "👤",
-  transport: "🚚",
-  others: "📦",
+  rent: <Home size={20} />,
+  salary: <User size={20} />,
+  transport: <Truck size={20} />,
+  others: <Package size={20} />,
 };
 
 const ExpensePage = () => {
@@ -102,7 +103,7 @@ const ExpensePage = () => {
 
       {/* Total Card */}
       <div className="total-banner expense-banner">
-        <span className="total-label">💸 Total Expenses</span>
+        <span className="total-label"><CreditCard size={20} className="inline" /> Total Expenses</span>
         <span className="total-value">{formatCurrency(total)}</span>
       </div>
 
@@ -110,7 +111,7 @@ const ExpensePage = () => {
         <LoadingSpinner text="Loading expenses..." />
       ) : expenses.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">💸</div>
+          <CreditCard size={48} className="empty-icon" />
           <p>No expense records yet</p>
           <button className="btn btn-danger" onClick={() => setIsFormOpen(true)}>
             Add First Expense
@@ -134,7 +135,7 @@ const ExpensePage = () => {
                   <td>
                     <div className="expense-type-cell">
                       <span className="expense-icon">
-                        {EXPENSE_ICONS[expense.type] || "📦"}
+                        {EXPENSE_ICONS[expense.type] || <Package size={20} />}
                       </span>
                       <span className="cell-main">
                         {expense.type.charAt(0).toUpperCase() + expense.type.slice(1)}
@@ -152,7 +153,7 @@ const ExpensePage = () => {
                         className="btn btn-danger btn-sm"
                         onClick={() => setDeleteDialog({ open: true, id: expense._id })}
                       >
-                        🗑️
+                        <Trash2 size={16} />
                       </button>
                     </td>
                   )}

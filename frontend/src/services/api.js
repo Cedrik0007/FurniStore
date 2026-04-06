@@ -58,9 +58,6 @@ if (import.meta.env.DEV) {
 
 const api = axios.create({
   baseURL,
-  headers: {
-    "Content-Type": "application/json",
-  },
   withCredentials: false, // we use Authorization header, not cookies
 });
 
@@ -71,6 +68,13 @@ api.interceptors.request.use(
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
+    
+    // Only set Content-Type to JSON if data is NOT FormData
+    // FormData needs to auto-detect and set Content-Type with proper boundary
+    if (!(config.data instanceof FormData)) {
+      config.headers["Content-Type"] = "application/json";
+    }
+    
     return config;
   },
   (error) => Promise.reject(error)

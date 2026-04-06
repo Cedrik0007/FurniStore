@@ -5,6 +5,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Alert from "../components/Alert";
 import IncomeForm from "../components/IncomeForm";
 import ConfirmDialog from "../components/ConfirmDialog";
+import { DollarSign, Trash2 } from "lucide-react";
 import "../styles/transactions.css";
 
 const formatCurrency = (value) => {
@@ -100,7 +101,7 @@ const IncomePage = () => {
 
       {/* Total Card */}
       <div className="total-banner income-banner">
-        <span className="total-label">💰 Total Income</span>
+        <span className="total-label"><DollarSign size={20} className="inline" /> Total Income</span>
         <span className="total-value">{formatCurrency(total)}</span>
       </div>
 
@@ -108,7 +109,7 @@ const IncomePage = () => {
         <LoadingSpinner text="Loading income..." />
       ) : incomes.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">💰</div>
+          <DollarSign size={48} className="empty-icon" />
           <p>No income records yet</p>
           <button className="btn btn-success" onClick={() => setIsFormOpen(true)}>
             Add First Income
@@ -146,7 +147,7 @@ const IncomePage = () => {
                         className="btn btn-danger btn-sm"
                         onClick={() => setDeleteDialog({ open: true, id: income._id })}
                       >
-                        🗑️
+                        <Trash2 size={16} />
                       </button>
                     </td>
                   )}

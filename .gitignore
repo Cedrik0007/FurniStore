@@ -5,3 +5,7 @@ dist/
 build/
 .DS_Store
 *.log
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+Mdfiles

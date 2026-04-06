@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { Upload, X } from "lucide-react";
 import "../styles/components.css";
 
 const CATEGORIES = ["Chair", "Bed", "Cupboard"];
@@ -8,10 +9,12 @@ const ProductForm = ({ isOpen, onClose, onSubmit, editProduct, loading }) => {
     name: "",
     price: "",
     description: "",
-    image: "",
+    image: null,
     category: "Chair",
   });
   const [errors, setErrors] = useState({});
+  const [imagePreview, setImagePreview] = useState("");
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (editProduct) {
@@ -19,11 +22,14 @@ const ProductForm = ({ isOpen, onClose, onSubmit, editProduct, loading }) => {
         name: editProduct.name || "",
         price: editProduct.price !== undefined ? String(editProduct.price) : "",
         description: editProduct.description || "",
-        image: editProduct.image || "",
+        image: null,
         category: editProduct.category || "Chair",
       });
+      // Show existing image preview if available
+      setImagePreview(editProduct.image || "");
     } else {
-      setForm({ name: "", price: "", description: "", image: "", category: "Chair" });
+      setForm({ name: "", price: "", description: "", image: null, category: "Chair" });
+      setImagePreview("");
     }
     setErrors({});
   }, [editProduct, isOpen]);
@@ -50,6 +56,29 @@ const ProductForm = ({ isOpen, onClose, onSubmit, editProduct, loading }) => {
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setErrors((prev) => ({ ...prev, image: "File size must be less than 5MB" }));
+        return;
+      }
+      setForm((prev) => ({ ...prev, image: file }));
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImagePreview(event.target?.result || "");
+      };
+      reader.readAsDataURL(file);
+      if (errors.image) setErrors((prev) => ({ ...prev, image: "" }));
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setForm((prev) => ({ ...prev, image: null }));
+    setImagePreview("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = validate();
@@ -57,7 +86,19 @@ const ProductForm = ({ isOpen, onClose, onSubmit, editProduct, loading }) => {
       setErrors(newErrors);
       return;
     }
-    onSubmit({ ...form, price: parseFloat(form.price) });
+
+    const formData = new FormData();
+    formData.append("name", form.name.trim());
+    formData.append("price", parseFloat(form.price));
+    formData.append("description", form.description.trim());
+    formData.append("category", form.category);
+    
+    // Only append image if a new file is selected
+    if (form.image) {
+      formData.append("image", form.image);
+    }
+
+    onSubmit(formData);
   };
 
   return (
@@ -127,16 +168,40 @@ const ProductForm = ({ isOpen, onClose, onSubmit, editProduct, loading }) => {
             {errors.description && <span className="error-text">{errors.description}</span>}
           </div>
 
+          {/* Image Upload Section */}
           <div className="form-group">
-            <label className="form-label">Image URL (optional)</label>
-            <input
-              type="url"
-              name="image"
-              value={form.image}
-              onChange={handleChange}
-              className="form-input"
-              placeholder="https://example.com/image.jpg"
-            />
+            <label className="form-label">Product Image (optional)</label>
+            <div className={`image-upload-container ${errors.image ? "input-error" : ""}`}>
+              {imagePreview ? (
+                <div className="image-preview-wrapper">
+                  <img src={imagePreview} alt="Preview" className="image-preview" />
+                  <button
+                    type="button"
+                    className="image-clear-btn"
+                    onClick={handleRemoveImage}
+                    aria-label="Remove image"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+              ) : (
+                <label className="image-upload-label">
+                  <div className="image-upload-content">
+                    <Upload size={32} className="upload-icon" />
+                    <p className="upload-text">Click to upload or drag and drop</p>
+                    <p className="upload-subtext">PNG, JPG, GIF, WebP (max 5MB)</p>
+                  </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="file-input-hidden"
+                  />
+                </label>
+              )}
+            </div>
+            {errors.image && <span className="error-text">{errors.image}</span>}
           </div>
 
           <div className="modal-actions">

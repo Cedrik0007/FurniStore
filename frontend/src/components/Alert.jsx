@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { CheckCircle, AlertCircle, AlertTriangle, Info } from "lucide-react";
 import "../styles/components.css";
 
 const Alert = ({ type = "info", message, onClose, autoClose = true }) => {
@@ -14,10 +15,10 @@ const Alert = ({ type = "info", message, onClose, autoClose = true }) => {
   return (
     <div className={`alert alert-${type}`}>
       <span className="alert-icon">
-        {type === "success" && "✅"}
-        {type === "error" && "❌"}
-        {type === "warning" && "⚠️"}
-        {type === "info" && "ℹ️"}
+        {type === "success" && <CheckCircle size={20} />}
+        {type === "error" && <AlertCircle size={20} />}
+        {type === "warning" && <AlertTriangle size={20} />}
+        {type === "info" && <Info size={20} />}
       </span>
       <span className="alert-message">{message}</span>
       {onClose && (

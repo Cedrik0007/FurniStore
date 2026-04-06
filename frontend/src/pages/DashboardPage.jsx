@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { DollarSign, CreditCard, TrendingUp, TrendingDown, Package, FileText } from "lucide-react";
 import "../styles/dashboard.css";
 
 const formatCurrency = (value) => {
@@ -73,7 +74,7 @@ const DashboardPage = () => {
       {/* Summary Cards */}
       <div className="stats-grid">
         <div className="stat-card stat-income">
-          <div className="stat-icon">💰</div>
+          <DollarSign size={32} className="stat-icon" />
           <div className="stat-info">
             <div className="stat-label">Total Income</div>
             <div className="stat-value">{formatCurrency(summary?.totalIncome)}</div>
@@ -81,7 +82,7 @@ const DashboardPage = () => {
         </div>
 
         <div className="stat-card stat-expense">
-          <div className="stat-icon">💸</div>
+          <CreditCard size={32} className="stat-icon" />
           <div className="stat-info">
             <div className="stat-label">Total Expense</div>
             <div className="stat-value">{formatCurrency(summary?.totalExpense)}</div>
@@ -89,7 +90,7 @@ const DashboardPage = () => {
         </div>
 
         <div className={`stat-card ${profit >= 0 ? "stat-profit" : "stat-loss"}`}>
-          <div className="stat-icon">{profit >= 0 ? "📈" : "📉"}</div>
+          {profit >= 0 ? <TrendingUp size={32} className="stat-icon" /> : <TrendingDown size={32} className="stat-icon" />}
           <div className="stat-info">
             <div className="stat-label">{profit >= 0 ? "Profit" : "Loss"}</div>
             <div className={`stat-value ${profit >= 0 ? "value-profit" : "value-loss"}`}>
@@ -99,7 +100,7 @@ const DashboardPage = () => {
         </div>
 
         <div className="stat-card stat-products">
-          <div className="stat-icon">🪑</div>
+          <Package size={32} className="stat-icon" />
           <div className="stat-info">
             <div className="stat-label">Total Products</div>
             <div className="stat-value">{summary?.totalProducts || 0}</div>
@@ -116,7 +117,7 @@ const DashboardPage = () => {
 
         {!recentTransactions || recentTransactions.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">📋</div>
+            <FileText size={48} className="empty-icon" />
             <p>No transactions yet</p>
           </div>
         ) : (

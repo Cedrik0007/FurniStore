@@ -5,6 +5,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Alert from "../components/Alert";
 import ProductForm from "../components/ProductForm";
 import ConfirmDialog from "../components/ConfirmDialog";
+import { Package, Trash2, Edit } from "lucide-react";
 import "../styles/products.css";
 
 const CATEGORIES = ["All", "Chair", "Bed", "Cupboard"];
@@ -132,7 +133,7 @@ const ProductsPage = () => {
         <LoadingSpinner text="Loading products..." />
       ) : products.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">🪑</div>
+          <Package size={48} className="empty-icon" />
           <p>No products found</p>
           {isOwner() && (
             <button className="btn btn-primary" onClick={() => setIsFormOpen(true)}>
@@ -160,7 +161,7 @@ const ProductsPage = () => {
                   className="product-image-placeholder"
                   style={{ display: product.image ? "none" : "flex" }}
                 >
-                  🪑
+                  <Package size={48} />
                 </div>
               </div>
               <div className="product-body">
@@ -175,13 +176,13 @@ const ProductsPage = () => {
                     className="btn btn-outline btn-sm"
                     onClick={() => openEdit(product)}
                   >
-                    ✏️ Edit
+                    <Edit size={16} className="inline" /> Edit
                   </button>
                   <button
                     className="btn btn-danger btn-sm"
                     onClick={() => setDeleteDialog({ open: true, product })}
                   >
-                    🗑️ Delete
+                    <Trash2 size={16} className="inline" /> Delete
                   </button>
                 </div>
               )}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { BarChart3, Package, DollarSign, CreditCard, LogOut, Sofa } from "lucide-react";
 import "../styles/layout.css";
 
 const Layout = () => {
@@ -29,8 +30,8 @@ const Layout = () => {
           <span className="hamburger-line"></span>
         </button>
         <div className="mobile-logo">
-          <span className="logo-icon">🛋️</span>
-          <span className="logo-text">FurniStore</span>
+          <span className="logo-icon"><Sofa size={24} className="inline" /></span>
+          <span className="logo-text">Bismi</span>
         </div>
         <div className="mobile-user-badge">{user?.name?.charAt(0).toUpperCase()}</div>
       </header>
@@ -44,9 +45,9 @@ const Layout = () => {
       <aside className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
         <div className="sidebar-header">
           <div className="sidebar-logo">
-            <span className="logo-icon">🛋️</span>
+            <span className="logo-icon"><Sofa size={24} className="inline" /></span>
             <div>
-              <div className="logo-text">FurniStore</div>
+              <div className="logo-text">Bismi</div>
               <div className="logo-sub">Manager</div>
             </div>
           </div>
@@ -66,7 +67,7 @@ const Layout = () => {
             className={({ isActive }) => `nav-item ${isActive ? "nav-item-active" : ""}`}
             onClick={closeSidebar}
           >
-            <span className="nav-icon">📊</span>
+            <BarChart3 size={20} className="nav-icon" />
             <span className="nav-label">Dashboard</span>
           </NavLink>
 
@@ -75,7 +76,7 @@ const Layout = () => {
             className={({ isActive }) => `nav-item ${isActive ? "nav-item-active" : ""}`}
             onClick={closeSidebar}
           >
-            <span className="nav-icon">🪑</span>
+            <Package size={20} className="nav-icon" />
             <span className="nav-label">Products</span>
           </NavLink>
 
@@ -84,7 +85,7 @@ const Layout = () => {
             className={({ isActive }) => `nav-item ${isActive ? "nav-item-active" : ""}`}
             onClick={closeSidebar}
           >
-            <span className="nav-icon">💰</span>
+            <DollarSign size={20} className="nav-icon" />
             <span className="nav-label">Income</span>
           </NavLink>
 
@@ -93,14 +94,14 @@ const Layout = () => {
             className={({ isActive }) => `nav-item ${isActive ? "nav-item-active" : ""}`}
             onClick={closeSidebar}
           >
-            <span className="nav-icon">💸</span>
+            <CreditCard size={20} className="nav-icon" />
             <span className="nav-label">Expenses</span>
           </NavLink>
         </nav>
 
         <div className="sidebar-footer">
           <button className="logout-btn" onClick={handleLogout}>
-            <span className="nav-icon">🚪</span>
+            <LogOut size={20} className="nav-icon" />
             <span>Logout</span>
           </button>
         </div>
@@ -117,28 +118,28 @@ const Layout = () => {
           to="/dashboard"
           className={({ isActive }) => `bottom-nav-item ${isActive ? "bottom-nav-active" : ""}`}
         >
-          <span className="bottom-nav-icon">📊</span>
+          <BarChart3 size={20} className="bottom-nav-icon" />
           <span className="bottom-nav-label">Dashboard</span>
         </NavLink>
         <NavLink
           to="/products"
           className={({ isActive }) => `bottom-nav-item ${isActive ? "bottom-nav-active" : ""}`}
         >
-          <span className="bottom-nav-icon">🪑</span>
+          <Package size={20} className="bottom-nav-icon" />
           <span className="bottom-nav-label">Products</span>
         </NavLink>
         <NavLink
           to="/income"
           className={({ isActive }) => `bottom-nav-item ${isActive ? "bottom-nav-active" : ""}`}
         >
-          <span className="bottom-nav-icon">💰</span>
+          <DollarSign size={20} className="bottom-nav-icon" />
           <span className="bottom-nav-label">Income</span>
         </NavLink>
         <NavLink
           to="/expenses"
           className={({ isActive }) => `bottom-nav-item ${isActive ? "bottom-nav-active" : ""}`}
         >
-          <span className="bottom-nav-icon">💸</span>
+          <CreditCard size={20} className="bottom-nav-icon" />
           <span className="bottom-nav-label">Expenses</span>
         </NavLink>
       </nav>

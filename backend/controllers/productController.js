@@ -40,7 +40,7 @@ const getProduct = async (req, res) => {
 // @access  Private (Owner only)
 const createProduct = async (req, res) => {
   try {
-    const { name, price, description, image, category } = req.body;
+    const { name, price, description, category } = req.body;
 
     // Validation
     if (!name || !description || !category) {
@@ -52,11 +52,17 @@ const createProduct = async (req, res) => {
       return res.status(400).json({ message: "Please provide a valid price" });
     }
 
+    // Handle image upload
+    let imagePath = "";
+    if (req.file) {
+      imagePath = `/uploads/${req.file.filename}`;
+    }
+
     const product = await Product.create({
       name: name.trim(),
       price: parsedPrice,
       description: description.trim(),
-      image: image || "",
+      image: imagePath,
       category,
       createdBy: req.user._id,
     });
@@ -77,7 +83,7 @@ const createProduct = async (req, res) => {
 // @access  Private (Owner only)
 const updateProduct = async (req, res) => {
   try {
-    const { name, price, description, image, category } = req.body;
+    const { name, price, description, category } = req.body;
 
     const product = await Product.findById(req.params.id);
     if (!product) {
@@ -93,8 +99,12 @@ const updateProduct = async (req, res) => {
     product.name = name ? name.trim() : product.name;
     product.price = parsedPrice;
     product.description = description ? description.trim() : product.description;
-    product.image = image !== undefined ? image : product.image;
     product.category = category || product.category;
+
+    // Handle image upload
+    if (req.file) {
+      product.image = `/uploads/${req.file.filename}`;
+    }
 
     const updatedProduct = await product.save();
     res.status(200).json({ message: "Product updated successfully", product: updatedProduct });

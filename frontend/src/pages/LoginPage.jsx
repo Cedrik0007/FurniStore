@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/login.css";
+import { DollarSign, CreditCard, TrendingUp, TrendingDown, Package, FileText ,Sofa } from "lucide-react";
 // import { useState } from "react";
 
 const LoginPage = () => {
@@ -55,14 +56,14 @@ const LoginPage = () => {
     <div className="login-page">
       <div className="login-card">
         <div className="login-header">
-          <div className="login-logo">🛋️</div>
-          <h1 className="login-title">FurniStore</h1>
+          <div className="login-logo"><Sofa size={40} /></div>
+          <h1 className="login-title">Bismi</h1>
           <p className="login-subtitle">Manager Portal</p>
         </div>
 
         {serverError && (
           <div className="login-error">
-            <span>❌</span> {serverError}
+            <AlertCircle size={20} className="inline" /> {serverError}
           </div>
         )}
 
