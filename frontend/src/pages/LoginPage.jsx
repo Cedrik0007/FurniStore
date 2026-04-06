@@ -58,7 +58,7 @@ const LoginPage = () => {
         <div className="login-header">
           <div className="login-logo"><Sofa size={40} /></div>
           <h1 className="login-title">Bismi</h1>
-          <p className="login-subtitle">Manager Portal</p>
+          {/* <p className="login-subtitle">Manager Portal</p> */}
         </div>
 
         {serverError && (
