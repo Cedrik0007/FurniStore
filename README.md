@@ -161,15 +161,6 @@ Frontend runs at: `http://localhost:5173`
 
 ---
 
-## 🔐 Login Credentials
-
-| Role  | Email                  | Password    |
-|-------|------------------------|-------------|
-| Owner | owner@furniture.com    | Owner@123   |
-| Staff | staff1@furniture.com   | Staff@123   |
-| Staff | staff2@furniture.com   | Staff@456   |
-
----
 
 ## 👥 Role Permissions
 
